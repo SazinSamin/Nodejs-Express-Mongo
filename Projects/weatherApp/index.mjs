@@ -28,6 +28,7 @@ app.init();
 
 // get the data as API
 http.createServer((req, res) => {
+    // if url = localhost:3000/weather, response the user with json format weather data
     if(req.url == '/weather') {
         res.end(JSON.stringify(app.data));
     }
