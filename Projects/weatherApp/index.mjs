@@ -14,6 +14,12 @@ import http from 'http';
 // App object - Module Scafolding.
 const app = {};
 
+// App configuration
+app.config = {
+    port: 3000
+}
+
+
 // App initiating function
 app.init =  async  () => {
     // Get the data from getDate() function.
@@ -32,6 +38,6 @@ http.createServer((req, res) => {
     if(req.url == '/weather') {
         res.end(JSON.stringify(app.data));
     }
-}).listen(3000);
+}).listen(app.config.port);
 
 console.log('Server is running');
