@@ -1,0 +1,4 @@
+remove this dependency from your project file
+
+
+const { parse } = require("ws/lib/extension");
