@@ -89,11 +89,11 @@ userHandler._user.post = (requestProperties, callback) => {
         ? requestProperties.body.toaString :
         false;
 
-    console.log(firstName);
-    console.log(lastName);
-    console.log(password);
-    console.log(phone);
-    console.log(toaString);
+    console.log(`firstName: ${firstName}`);
+    console.log(`lastName: ${lastName}`);
+    console.log(`password: ${password}`);
+    console.log(`phone: ${phone}`);
+    console.log(`toaString: ${toaString}`);
 
     if (firstName && lastName && phone && password && toaString) {
 

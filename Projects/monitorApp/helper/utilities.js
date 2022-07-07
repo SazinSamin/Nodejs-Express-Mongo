@@ -21,13 +21,30 @@ utilities.parseJSON = (jsonString) => {
 utilities.getHash = (str) => {
         if (typeof (str) === 'string' && str.length > 0) {
                 let hashedStr = hash.createHmac('sha256', environment.hashKey)
-                        .update('Don\'t love me')
+                        .update(str)
                         .digest('hex');
                 return hashedStr;
         } else {
                 return false;
         }
 };
+
+
+utilities.getToken = (tokenLength) => {
+        let length = tokenLength;
+        length = typeof (tokenLength) === 'number' && tokenLength > 0 ? length : false;
+        if (length) {
+                let generatedToken = '';
+                const possibleCharacter = 'abcdefghijklmnopqrstwxyz0123456789';
+                for (let i = 0; i < length; i++) {
+                        const randomCharacter = possibleCharacter.charAt(Math.round(Math.random() * possibleCharacter.length));
+                        generatedToken += randomCharacter;
+                }
+                return generatedToken;
+        } else {
+                return false;
+        }
+}
 
 
 // export module

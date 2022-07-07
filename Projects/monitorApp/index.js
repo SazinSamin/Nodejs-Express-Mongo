@@ -19,28 +19,13 @@ const app = {};
 app.config = {
     // get port according to environment
     port: environment.port,
+    token: {
+        tokenLength: 16,
+        expire: Date.now() + (3600 * 1000),
+    }
 };
 
 
-// testing of file writing
-/*
-data.update('test', 'database1', {name: "Ilan", age: 23}, (res) => {
-     console.log(res);
-});
-*/
-
-
-/*
-data.read('test', 'database1', (err, data) => {
-    err ? console.err(err) : console.log(data);
-});
-*/
-
-/*
-data.delete('test', 'database1', (res) => {
-    console.log(res);
-});
-*/
 
 
 
@@ -56,5 +41,7 @@ app.reqResHandler = handler.reqResHanlder;
 
 // start server
 app.startServer();
+
+module.exports = app;
 
 

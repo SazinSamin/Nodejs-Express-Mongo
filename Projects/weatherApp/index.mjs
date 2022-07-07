@@ -16,16 +16,16 @@ const app = {};
 
 // App configuration
 app.config = {
-    port: 3000
+    port: process.env.PORT,
 }
 
 
 // App initiating function
 app.init =  async  () => {
     // Get the data from getDate() function.
-    const data = await fetchData.api.getData();
+    app.data = await fetchData.api.getData();
     // Log data output to the console.
-    console.log(data)
+    console.log(app.data)
 }
 
 // Invoke the app start function
@@ -35,8 +35,12 @@ app.init();
 // get the data as API
 http.createServer((req, res) => {
     // if url = localhost:3000/weather, response the user with json format weather data
-    if(req.url == '/weather') {
+    if(req.url === '/') {
+        res.end('Welcome to Nodejs Demo server, for weather data go /weather url');
+    } else if(req.url === '/weather') {
         res.end(JSON.stringify(app.data));
+    }  else {
+        res.end('404! Not found');
     }
 }).listen(app.config.port);
 

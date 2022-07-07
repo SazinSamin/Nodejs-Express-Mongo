@@ -89,7 +89,7 @@ lib.delete = (dir, file, callback) => {
     // unlink or deletation of a file
     fs.unlink(`${lib.baseDir + dir}/${file}.json`, (unlinkErr) => {
         unlinkErr ? callback(`Error in file deletation ${unlinkErr}`)
-            : callback(fals);
+            : callback(false);
     });
 }
 

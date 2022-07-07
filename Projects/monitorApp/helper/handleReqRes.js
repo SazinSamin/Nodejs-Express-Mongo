@@ -26,8 +26,6 @@ handler.reqResHanlder = (req, res) => {
     const queryStringObject = parsedUrl.query;
     const headerObject = req.headers;
 
-    console.log(req);
-
     const decoderObj = new StringDecoder();
     let payload = '';
 
