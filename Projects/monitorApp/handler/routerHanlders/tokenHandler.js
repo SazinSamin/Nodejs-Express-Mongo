@@ -176,7 +176,36 @@ tokenHandler._token.put = (requestProperties, callback) => {
 
 // delete existing data
 tokenHandler._token.delete = (requestProperties, callback) => {
+        // tokne number validation
+        const id = typeof (requestProperties.queryStringObject.id) === 'string' &&
+                requestProperties.queryStringObject.id.trim().length == 16 ? requestProperties.queryStringObject.id :
+                false;
 
+        if (id) {
+                data.read('token', id, (readErr, tokenData) => {
+                        if (!readErr && tokenData) {
+                                data.delete('token', id, (deleteErr) => {
+                                        if (!deleteErr) {
+                                                callback(200, {
+                                                        message: `Token data has successfully deleted`,
+                                                });
+                                        } else {
+                                                callback(500, {
+                                                        error: `Error in data deletation, ${deleteErr}`,
+                                                });
+                                        }
+                                });
+                        } else {
+                                callback(500, {
+                                        error: `Problem in read from database ${readErr}`,
+                                });
+                        }
+                });
+        } else {
+                callback(400, {
+                        error: '400! Bad request, Invalid id number',
+                });
+        }
 };
 
 
