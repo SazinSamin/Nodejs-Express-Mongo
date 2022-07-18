@@ -51,7 +51,7 @@ tokenHandler._token.post = (requestProperties, callback) => {
                                 let hashedPassword = getHash(password);
                                 if (hashedPassword === parseJSON(userData).password) {
                                         const tokenId = getToken(16);
-                                        const expireDate = Date.now() + (3600 * 1000);
+                                        const expireDate = Date.now() + ((3600 * 24) * 1000);
 
                                         // combined all to a token object
                                         const tokenObject = {
@@ -64,7 +64,8 @@ tokenHandler._token.post = (requestProperties, callback) => {
                                         data.create('token', tokenId, tokenObject, (createErr) => {
                                                 if (!createErr) {
                                                         callback(200, {
-                                                                message: 'Token has successfully generated & stored',
+                                                                message: 'Token Has successfully created & stored',
+                                                                tokenObject,
                                                         });
                                                 } else {
                                                         callback(400, {
@@ -207,6 +208,26 @@ tokenHandler._token.delete = (requestProperties, callback) => {
                 });
         }
 };
+
+
+tokenHandler._token.verifyToken = (id, phone, callback) => {
+        // read token data from database
+        console.log(`verify token: ${id}, ${phone}`);
+        data.read('token', id, (readErr, tokenData) => {
+                if(!readErr && tokenData) {
+                        const tokenObject = parseJSON(tokenData);
+                        console.log(tokenObject);
+                        // verify token with phone number & expire date.
+                        if(tokenObject.phone == phone && tokenObject.expireDate > Date.now()) {
+                                callback(true);
+                        } else {
+                                callback(false);
+                        }
+                } else {
+                        callback(false);
+                }
+        });
+}
 
 
 

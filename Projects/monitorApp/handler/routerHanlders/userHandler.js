@@ -10,6 +10,7 @@ const data = require('../../lib/data');
 const { getHash } = require('../../helper/utilities');
 const { create, read, update } = require("../../lib/data");
 const { parseJSON } = require('../../helper/utilities');
+const tokenHandler = require('../routerHanlders/tokenHandler');
 
 
 // App object - Module scafolding.
@@ -40,28 +41,43 @@ userHandler._user.get = (requestProperties, callback) => {
     const phone = typeof (requestProperties.queryStringObject.phone) === 'string' &&
         requestProperties.queryStringObject.phone.trim().length == 11 ? requestProperties.queryStringObject.phone :
         false;
+
+    // get the token from the request hader & verify
+    const token = typeof(requestProperties.headerObject.token) === 'string' ? requestProperties.headerObject.token : false;  
+
     if (phone) {
-        // lookup in the data for user
-        data.read('user', phone, (readErr, data) => {
-            // convert JSON string from database to JSON 
-            // using spread operator to do deep copy of object.
-            const user = { ...parseJSON(data) };
-            if (!readErr && user) {
-                // delete confedential information
-                delete user.password;
-                // return data to user
-                callback(200, {
-                    message: user,
+
+        // verify token
+        tokenHandler._token.verifyToken(token, phone, (res) => {
+            console.log(`res: ${res}`);
+            if (res) {
+                // lookup in the data for user
+                data.read('user', phone, (readErr, data) => {
+                    // convert JSON string from database to JSON 
+                    // using spread operator to do deep copy of object.
+                    const user = { ...parseJSON(data) };
+                    if (!readErr && user) {
+                        // delete confedential information
+                        delete user.password;
+                        // return data to user
+                        callback(200, {
+                            message: user,
+                        });
+                    } else {
+                        callback(500, {
+                            message: `Error in reading data from database ${readErr}`,
+                        });
+                    }
                 });
             } else {
-                callback(500, {
-                    message: `Error in reading data from database ${readErr}`,
+                callback(403, {
+                    error: 'Authentication failed, please log in again',
                 });
             }
         });
     } else {
         callback(404, {
-            message: '404! User not found',
+            message: `404! ${requestProperties.queryStringObject.phone} user not found `,
         });
     }
 };
@@ -156,46 +172,61 @@ userHandler._user.put = (requestProperties, callback) => {
         requestProperties.body.password.trim().length > 0 ? requestProperties.body.password :
         false;
 
+    // get the token from the request hader & verify
+    const token = typeof (requestProperties.headerObject.token) === 'string' ? requestProperties.headerObject.token : false;  
+
+
     if (phone) {
-        if (firstName || lastName || password) {
-            // lookup on database for user data
-            data.read('user', phone, (readErr, userData) => {
-                const retrievedData = { ...parseJSON(userData) };
-                if (!readErr && retrievedData) {
-                    if(firstName) {
-                        retrievedData.firstName = firstName;
-                    } 
-                    if(lastName) {
-                        retrievedData.lastName = lastName;
-                    }
-                    if(password) {
-                        retrievedData.password = getHash(password);
-                    }
+
+        // verify token
+        tokenHandler._token.verifyToken(token, phone, (res) => {
+            console.log(`res: ${res}`);
+            if (res) {
+                if (firstName || lastName || password) {
+                    // lookup on database for user data
+                    data.read('user', phone, (readErr, userData) => {
+                        const retrievedData = { ...parseJSON(userData) };
+                        if (!readErr && retrievedData) {
+                            if (firstName) {
+                                retrievedData.firstName = firstName;
+                            }
+                            if (lastName) {
+                                retrievedData.lastName = lastName;
+                            }
+                            if (password) {
+                                retrievedData.password = getHash(password);
+                            }
 
 
-                    // store the updated data
-                    data.update('user', phone, retrievedData, (updateErr) => {
-                        if(!updateErr) {
-                            callback(200, {
-                                message: 'User data has updated successfully',
+                            // store the updated data
+                            data.update('user', phone, retrievedData, (updateErr) => {
+                                if (!updateErr) {
+                                    callback(200, {
+                                        message: 'User data has updated successfully',
+                                    });
+                                } else {
+                                    callback(500, {
+                                        error: `Update error: ${updateErr}`,
+                                    });
+                                }
                             });
                         } else {
                             callback(500, {
-                                error: `Update error: ${updateErr}`,
+                                error: `File system read error ${readErr}`,
                             });
                         }
-                    } );
+                    });
                 } else {
-                    callback(500, {
-                        error: `File system read error ${readErr}`,
+                    callback(400, {
+                        error: '400! Bad request!, Give at least one parameter',
                     });
                 }
-            });
-        } else {
-            callback(400, {
-                error: '400! Bad request!, Give at least one parameter',
-            });
-        }
+            } else {
+                callback(403, {
+                    error: 'Authentication failed, please log in again',
+                });
+            }
+        });
     } else {
         callback(400, {
             error: '400! Bad request, Invalid phone number',
@@ -210,26 +241,41 @@ userHandler._user.delete = (requestProperties, callback) => {
         requestProperties.queryStringObject.phone.trim().length == 11 ? requestProperties.queryStringObject.phone :
         false;
 
+    // get the token from the request hader & verify
+    const token = typeof (requestProperties.headerObject.token) === 'string' ? requestProperties.headerObject.token : false;  
+
     if(phone) {
-        data.read('user', phone, (readErr, userData) => {
-            if(!readErr && userData) {
-                data.delete('user', phone, (deleteErr) => {
-                    if(!deleteErr) {
-                        callback(200, {
-                            message: `${phone} data has successfully deleted`,
+
+
+        // verify token
+        tokenHandler._token.verifyToken(token, phone, (res) => {
+            console.log(`res: ${res}`);
+            if (res) {
+                data.read('user', phone, (readErr, userData) => {
+                    if (!readErr && userData) {
+                        data.delete('user', phone, (deleteErr) => {
+                            if (!deleteErr) {
+                                callback(200, {
+                                    message: `${phone} data has successfully deleted`,
+                                });
+                            } else {
+                                callback(500, {
+                                    error: `Error in data deletation, ${deleteErr}`,
+                                });
+                            }
                         });
                     } else {
                         callback(500, {
-                            error: `Error in data deletation, ${deleteErr}`,
+                            error: `Problem in read from database ${readErr}`,
                         });
                     }
                 });
             } else {
-                callback(500, {
-                    error: `Problem in read from database ${readErr}`,
+                callback(403, {
+                    error: 'Authentication failed, please log in again',
                 });
             }
-        });
+        });   
     } else {
         callback(400, {
             error: '400! Bad request, Invalid phone number',

@@ -14,7 +14,6 @@ lib.baseDir = path.join(__dirname, '/../.data/');
 lib.create = (dir, file, data, callback) => {
     // open file for writing 
     fs.open(`${lib.baseDir + dir}/${file}.json`, 'wx', (openErr, fileDescriptor) => {
-        console.log(`fileDescriptor: ${fileDescriptor}`);
         if (!openErr && fileDescriptor) {
             // convert data to string
             const dataString = JSON.stringify(data);
@@ -77,7 +76,7 @@ lib.update = (dir, file, data, callback) => {
                 }
             });
         } else {
-            callback(`Error in file openign: \n${opener}`);
+            callback(`Error in file openign: \n${openErr}`);
         }
     });
 }

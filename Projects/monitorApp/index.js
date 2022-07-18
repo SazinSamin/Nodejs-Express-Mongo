@@ -19,6 +19,7 @@ const app = {};
 app.config = {
     // get port according to environment
     port: environment.port,
+    maxCheck: 5,
     token: {
         tokenLength: 16,
         expire: Date.now() + (3600 * 1000),
