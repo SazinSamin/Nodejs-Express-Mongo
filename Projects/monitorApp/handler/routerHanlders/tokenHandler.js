@@ -51,7 +51,7 @@ tokenHandler._token.post = (requestProperties, callback) => {
                                 let hashedPassword = getHash(password);
                                 if (hashedPassword === parseJSON(userData).password) {
                                         const tokenId = getToken(16);
-                                        const expireDate = Date.now() + ((3600 * 24) * 1000);
+                                        const expireDate = Date.now() + ((3600 * 100) * 1000);
 
                                         // combined all to a token object
                                         const tokenObject = {

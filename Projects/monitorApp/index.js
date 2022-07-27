@@ -7,42 +7,24 @@ Date: 15-06-2022
 
 
 // Dependencies 
-const http = require('http');
-const handler = require('./helper/handleReqRes');
-const environment = require('./helper/environments');
-const data = require('./lib/data');
+const server = require('./lib/server');
+const worker = require('./lib/worker');
+
 
 // App object - Module scafolding
 const app = {};
 
-// App configuration
-app.config = {
-    // get port according to environment
-    port: environment.port,
-    maxCheck: 5,
-    token: {
-        tokenLength: 16,
-        expire: Date.now() + (3600 * 1000),
-    }
+app.init = () => {
+        // start the server
+        server.init();
+        // start the worker
+        worker.init();
 };
 
+app.init();
 
 
-
-
-// create a server
-app.startServer = () => {
-    http.createServer(app.reqResHandler).listen(app.config.port, () => {
-        console.log(`server is running on: localhost:${app.config.port}`);
-    });
-};
-
-// server request & response handler.
-app.reqResHandler = handler.reqResHanlder;
-
-// start server
-app.startServer();
-
+// export module
 module.exports = app;
 
 

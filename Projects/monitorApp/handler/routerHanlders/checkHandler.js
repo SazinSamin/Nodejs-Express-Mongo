@@ -8,11 +8,8 @@ Date: 15-06-2022
 // dependicies
 const data = require('../../lib/data');
 const { getHash, getToken } = require('../../helper/utilities');
-const { create, read, update } = require("../../lib/data");
 const { parseJSON } = require('../../helper/utilities');
 const tokenHandler = require('../routerHanlders/tokenHandler');
-const config = require('../../index');
-const { user } = require('../../routes');
 
 
 // App object - Module scafolding.

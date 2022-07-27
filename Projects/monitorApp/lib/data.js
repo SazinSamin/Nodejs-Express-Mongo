@@ -93,4 +93,30 @@ lib.delete = (dir, file, callback) => {
 }
 
 
+// list all the files name in a directory
+lib.listAllFileName = (dir, callback) => {
+    fs.readdir(`${lib.baseDir + dir}/`, (readErr, allFileNames) => {
+        // read all file names of a directory.
+        if(!readErr && allFileNames && allFileNames.length > 0) {
+            // remove  the .json extension from the files names
+            const removeJSONFromFileName = [];
+            allFileNames.forEach(fileName => {
+                removeJSONFromFileName.push(fileName.replace('.json', ''));
+            });
+            callback(false, {
+                'checksArr': removeJSONFromFileName,
+            });
+        } else {
+            callback(500, {
+                err: `Can't read data from the file, ${readErr}`,
+            });
+        }
+    });
+}
+
+
+
+
+
+
 module.exports = lib;

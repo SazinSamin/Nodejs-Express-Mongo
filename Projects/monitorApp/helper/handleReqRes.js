@@ -34,13 +34,13 @@ handler.reqResHanlder = (req, res) => {
         parsedUrl, path, trimmedPath, method, queryStringObject, headerObject,
     }
 
-
+    console.log(routes[trimmedPath]);
     const chosenHandler = routes[trimmedPath] ? routes[trimmedPath] : notFoundHanlder.handler;
-
+    console.log(chosenHandler);
 
     req.on('data', (buffer) => {
         payload += decoderObj.write(buffer);
-        console.log(`Body: ${payload}`);
+        // console.log(`Body: ${payload}`);
     });
 
     req.on('end', () => {
@@ -58,7 +58,8 @@ handler.reqResHanlder = (req, res) => {
     
             // stringfy the payload to give json result
             payloadString = JSON.stringify(payload);
-            console.log(`payloadString: ${payloadString}`);
+            // console.log(`payloadString: ${payloadString}`);
+
 
             // set additional header
             res.setHeader('Content-Type', 'application/json');
