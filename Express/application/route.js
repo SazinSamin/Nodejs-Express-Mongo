@@ -5,6 +5,11 @@ const express = require('express');
 const app = express();
 
 app.route('/')
+        // it is just a middlware, works for all methods
+        .all((req, res, next) => {
+                console.log('User logged in');
+                next();
+        })
         .get((req, res) => {
                 console.log('This is a get request');
         })

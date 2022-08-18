@@ -1,7 +1,10 @@
 // https://www.youtube.com/watch?v=JC8pvR7ZOiE&t=940s
 
+
+
 const express = require('express');
 const cors = require('cors');
+const res = require('express/lib/response');
 
 const app = express();
 
@@ -14,12 +17,10 @@ app.use(express.json());
 
 const middleWare1 = (req, res, next) => {
         console.log(`This is middleWare 1 from`);
-        // if we put dat to the next, it will be understood as an error, so express will stop going next &
+        // if we put at to the next, it will be understood as an error, so express will stop going next &
         //  send the string inside next as the response.
         next();
 };
-
-
 
 
 const errorMiddleware = (req, res, next) => {
@@ -64,7 +65,7 @@ const middleware3 = (config) => (req, res, next) => {
         }
 };
 // pass parameter for defining middleware according to that
-app.use(middleware3({log: false}));
+app.use(middleware3({log: true}));
 
 
 
@@ -83,10 +84,41 @@ app.use(errorHandlingMiddleware);
 
 
 
+
+// if there have same path route has avaiable though like "app.get('/')", there has two same kind of
+// this path, then both route will be called, but any middleware will call once.
+// but somehow two same route call not executed in my test
+const middleWare4 = (req, res, next) => {
+        console.log('I am called once');
+        next();
+};
+
+app.use(middleWare4);
+
+// if there same two route, first one will be executed
+app.get('/once', (req, res) => {
+        console.log('Call from 1');
+        res.end();
+});
+
+app.get('/once', (req, res) => {
+        console.log('Call from 2');
+        res.end();
+});
+
+
+
+
+
+
+
+
+
+
 app.get('/', (req, res) => {
         res.send('Welcome to the server');
 });
 
-app.listen(3000, () => {
-        console.log('Server is running in port=3000...');
+app.listen(4000, () => {
+        console.log('Server is running in port=4000...');
 })
