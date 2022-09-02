@@ -5,38 +5,58 @@ mongosh
 
 # clear the mongo terminal
 cls
+
 # show all databases
 show dbs
+
 # make database (here "market" is database name)
 use market
+
 # see current database
 market> db
+
+# get all collection
+market> show collections
+
 # insert single collection to database, here "product" is collection & "insertOne" is the method to insert one collection in database.
 market> db.products.insertOne({name:'Alu', price: 20, catogory: 'vegetable', avaible: true})
+
 # get the collection from database
 market> db.products.find()
+
 # get the collection from database in pretty form
 market> db.products.find().pretty()
+
 # insert many collection to database
 market> db.products.insertMany([{name: 'Rice', price: 60, catogory:'grain', avaiable: true}, {name: 'Beef', price: 800, catogory: 'meat', avaiable: true}])
+
 # specifiq search, 
 market> db.products.find({catogory:"vegetable", })
+
 # specifiq search with multiple parameters
 market> db.products.find({catogory:"vegetable", avaiable:true})
+
 # include or exclude a field from the findings, 0 = exclude, 1 = include. (here "price: 0" exclude price).
 market> db.products.find({catogory:"vegetable"}, {price:0})
+
 # specify how many collection you want, ( "limit(3)" means first 3 collection).
 market> db.products.find().limit(3)
+
 # skip how many collection from findings, here first collection will be skiped.
 market> db.products.find().skip(1)
+
 # get the first collectoin
 market> db.products.findOne()
+
 # update a single existing data
 market> db.products.updateOne({name: 'Alu'}, {$set:{price:25}})
+
 # update multple data at once
 market> db.products.updateMany({}, {$set:{avaiable: false}})
+
 # delete single collection
 market> db.products.deleteOne({name: 'Alu'})
+
 # delete multtple collection
 market> db.products.deleteMany({avaiable: false})
 
