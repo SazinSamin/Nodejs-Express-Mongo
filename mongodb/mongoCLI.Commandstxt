@@ -1,5 +1,8 @@
 # Every data pack insert into the database in mongodb known as collection.
 
+# begin using mongodb
+mongosh
+
 # clear the mongo terminal
 cls
 # show all databases
