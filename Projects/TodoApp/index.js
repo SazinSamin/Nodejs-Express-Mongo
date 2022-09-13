@@ -10,12 +10,17 @@ const app = express();
 app.use(json());
 
 // mongodb database connection
-mongoose.connect('mongodb://localhost/todos', {
-}).then(() => {
-        console.log('Database connection established');
-}).catch(err => {
-        console.log(err);
-});
+const callDatabase = (req, res, next) => {
+        mongoose.connect('mongodb://localhost/todos', {
+        }).then(() => {
+                console.log('Database connection established');
+                next();
+        }).catch(err => {
+                next(err);
+        });
+}
+
+app.use(callDatabase);
 
 
 app.get('/', (req, res) => {
