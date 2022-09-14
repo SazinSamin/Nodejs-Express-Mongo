@@ -14,6 +14,28 @@ app.use(express.urlencoded({extended: true}));
 
 
 
+import mongoose  from "mongoose";
+
+const todoSchema =  mongoose.Schema({
+        title: {
+                type: String,
+                required: true
+        },
+        description: String,
+        status: {
+                type: String,
+                enum: ["active", "inactive"],
+        },
+        date: {
+                type: Date,
+                default: Date.now
+        }
+});
+
+export default todoSchema;
+
+
+
 // mongodb database connection
 const callDatabase = (req, res, next) => {
         mongoose.connect('mongodb://localhost/todos', {
