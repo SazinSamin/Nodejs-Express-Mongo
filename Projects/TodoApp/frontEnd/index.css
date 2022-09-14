@@ -1,0 +1,44 @@
+body{
+        background-color: #00203FFF;
+        color: white;
+        text-align: center;
+        font-size: 1.1vw;
+        font-family: 'Courier New',
+        Courier,
+        monospace;
+        color: #ADEFD1FF;
+}
+#todos{
+        margin: 1rem;
+        padding: 2rem 2rem;
+        text-align: center;
+        margin: 0%;     
+}
+#card{
+        border-radius: 10%;
+        border: 0ch;
+        margin: 1%;
+        display: inline-block;
+        border: 5px outset rgb(2, 1, 216);
+        padding: 1rem 1rem;
+        vertical-align: middle;
+}
+#title{
+        background-color: rgb(65, 20, 211);
+        border: 5px outset rgb(2, 1, 216);
+        border-radius: 10%;
+}
+
+#addLink{
+        border-radius: 10%;
+        border: 0ch;
+        margin: 1%;
+        display: inline-block;
+        border: 5px outset rgb(5, 255, 9);
+        padding: 1rem 1rem;
+        vertical-align: middle;
+        color: white;
+        background-color: green;
+        text-decoration: none;
+        font-size: 15px;
+}

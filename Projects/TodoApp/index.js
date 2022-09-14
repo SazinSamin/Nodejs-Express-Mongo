@@ -2,12 +2,18 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 import todoHandler from './routerHandler/todoHandler.js';
+import cors from 'cors';
 
 // app object
 const app = express();
 
+
 // return json data
+app.use(cors());
 app.use(json());
+app.use(express.urlencoded({extended: true}));
+
+
 
 // mongodb database connection
 const callDatabase = (req, res, next) => {
@@ -24,7 +30,7 @@ app.use(callDatabase);
 
 
 app.get('/', (req, res) => {
-        res.status(200).send('Server is alive...');
+        res.redirect('/todo');
 })
 
 

@@ -1,0 +1,17 @@
+body {
+        background-color: #00203FFF;
+        color: white;
+        text-align: center;
+        font-size: 1.1vw;
+        font-family: 'Courier New',
+                Courier,
+                monospace;
+        color: #ADEFD1FF;
+        
+        border: 0ch;
+        display: center-block;
+        border: 5px outset rgb(2, 1, 216);
+        padding: 1rem 1rem;
+        
+}
+

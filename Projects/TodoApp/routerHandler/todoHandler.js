@@ -45,11 +45,14 @@ router.get('/:id', async (req, res) => {
 
 // post a the todo
 router.post('/', async (req, res) => {
+        console.log(req.body);
         const newTodo = new Todo(req.body);
         await newTodo.save(err => {
                 err ?
                         res.status(500).send(`Server side error: ${err}`) :
-                        res.status(200).send('Todo saved in database');
+                        setTimeout(() => {
+                                        res.redirect('http://127.0.0.1:5500/frontEnd/viewall.html');
+                                }, 0)
         });
 });
 
