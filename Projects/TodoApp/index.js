@@ -29,6 +29,21 @@ const callDatabase = (req, res, next) => {
 app.use(callDatabase);
 
 
+// async await database connection style
+/*
+userRoute.use( async (req, res, next) => {
+        try {
+                const database = await mongoose.connect('mongodb://localhost/todos');
+                console.log('Database connection established...');
+                next();
+        } catch (e) {
+                console.log(e);
+        }
+});
+*/
+
+
+
 app.get('/', (req, res) => {
         res.redirect('/todo');
 })
