@@ -1,0 +1,5 @@
+// https://stackoverflow.com/questions/45854169/how-can-i-use-an-es6-import-in-node-js
+add 
+{ "type": "module"}
+or 
+use .mjs extension
