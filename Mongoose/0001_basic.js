@@ -16,6 +16,9 @@ app.use(express.urlencoded({extended: true}));
 
 import mongoose  from "mongoose";
 
+// always remember the below schema parameters name and the data we post that parameter's name should be same.
+// like below schema "title" should be "title" in post request also.
+
 const todoSchema =  mongoose.Schema({
         title: {
                 type: String,
