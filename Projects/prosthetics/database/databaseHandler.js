@@ -11,6 +11,7 @@ database.localDatabase = 'mongodb://localhost/test_prosthetics';
 
 // establishment of database connection
 database.connectDatabase = async(req, res, next) => {
+        // primary selected database
         let selectedDatabase = database.localDatabase;
         // select database accroding to the environment variable
         if(process.env.selectDatabase == 'online') selectedDatabase = database.onlineDatabase;
