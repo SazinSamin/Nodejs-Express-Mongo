@@ -10,4 +10,7 @@
 // by passing this ENV_VAR from outside, we can also get this value from inside
 // under "process.env".
 
+// for multiple variable
+// selectDatabase='online' onlineDBPass=23423 nodemon index.js
+
 console.log(process.env.ENV_VAR);
