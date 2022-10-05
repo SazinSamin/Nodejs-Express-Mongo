@@ -4,16 +4,19 @@ import dataSchema from "./dataSchema.js";
 // app module
 const database = {};
 
+// database address
 database.onlineDatabase = `mongodb+srv://sazinsamin:${process.env.onlineDBPass}@cluster0.dduuimh.mongodb.net/prosthetics_data?retryWrites=true&w=majority`;
 database.localDatabase = 'mongodb://localhost/test_prosthetics';
+
 
 // establishment of database connection
 database.connectDatabase = async(req, res, next) => {
         let selectedDatabase = database.localDatabase;
+        // select database accroding to the environment variable
         if(process.env.selectDatabase == 'online') selectedDatabase = database.onlineDatabase;
         try {
                 await mongoose.connect(selectedDatabase);
-                console.log(`Database connection established...`);
+                console.log(`Database connection established to ${process.env.selectDatabase === undefined ? 'local' : process.env.selectDatabase}...`);
                 next();
         } catch (e) {
                 next(e);
