@@ -1,0 +1,52 @@
+body {
+        background-color: #00203FFF;
+        color: white;
+        text-align: center;
+        font-size: 1.1vw;
+        font-family: 'Courier New',
+                Courier,
+                monospace;
+        color: #ADEFD1FF;
+        
+        border: 0ch;
+        display: center-block;
+        border: 5px outset rgb(2, 1, 216);
+        padding: 1rem 1rem;
+        
+}
+
+
+
+#submit {
+        padding: 12px;
+        background-color: rgb(9, 124, 93);
+        color: white;
+        border-radius: 9px 9px;
+        border: 2px solid grey;
+        display: inline-block;
+        text-decoration: none;
+        opacity: 1.0;
+}
+
+/* from https: //github.com/SazinSamin/Html_Css_Bootstrap/blob/master/CSS/Design/Github_like_button.css */
+#submit:hover {
+        padding: 12px;
+        background-color: rgb(13, 84, 65);
+        color: yellow;
+        border-radius: 9px 9px;
+        border: 2px solid grey;
+        display: inline-block;
+        text-decoration: none;
+        opacity: 0.5;
+}
+
+
+#delete {
+        padding: 12px;
+        background-color: whitesmoke;
+        color: red;
+        border-radius: 9px 9px;
+        border: 2px solid grey;
+        display: inline-block;
+        text-decoration: none;
+}
