@@ -7,11 +7,18 @@ Author: Group-6, Capstone, EEE, UIU
 import express from "express";
 import errorHandler from "./handler/erroHanlder.js";
 import userRoute from "./handler/routeHandler.js";
+import cors from 'cors';
 
 
 // app object - module scafolding
 const app = express();
-// app.use(cors());
+
+// configuration
+const config = {};
+// port config
+config.port = process.env.PORT || 3000;
+
+app.use(cors());
 app.use(express.json());
 app.use(express.raw());
 app.use(express.text());
@@ -26,7 +33,7 @@ app.use(errorHandler);
 
 
 // app listening
-app.listen(4000, () => {
-        console.log("Server is listening on port 4000...");
+app.listen(config.port, () => {
+        console.log(`Server is listening on port ${config.port}...`);
 })
 

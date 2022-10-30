@@ -1,3 +1,9 @@
+/*
+Name: Prosthetic Arm with sense server
+Date: 05-09-2022
+Author: Group-6, Capstone, EEE, UIU
+*/
+
 // utility object
 const utilities = {};
 
