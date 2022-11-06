@@ -1,0 +1,1 @@
+[How to get the latest and oldest record in mongoose.js (or just the timespan between them)](https://stackoverflow.com/questions/12467102/how-to-get-the-latest-and-oldest-record-in-mongoose-js-or-just-the-timespan-bet)
