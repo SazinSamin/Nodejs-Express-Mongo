@@ -18,7 +18,7 @@ const config = {};
 // port config
 config.port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({origin: '*'}));
 app.use(express.json());
 app.use(express.raw());
 app.use(express.text());
@@ -35,5 +35,5 @@ app.use(errorHandler);
 // app listening
 app.listen(config.port, () => {
         console.log(`Server is listening on port ${config.port}...`);
-})
+});
 

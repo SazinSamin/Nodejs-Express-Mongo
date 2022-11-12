@@ -44,7 +44,12 @@ database.collection = new mongoose.model('test_prosthetics', dataSchema);
 
 // fetch data from server
 database.fetch =  async () => {
-       return await database.collection.find({})
+       return await database.collection.find({});
+}
+
+// fetch single data from server
+database.fetchSingleData = async () => {
+        return await database.collection.findOne({}).sort({ field: 'asc', _id: -1 }).limit(1);
 }
 
 // save data to the server

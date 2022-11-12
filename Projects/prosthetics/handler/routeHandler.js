@@ -21,6 +21,13 @@ userRoute.get('/', async (req, res) => {
         res.status(200).send(fectchedData);
 });
 
+// handle get request for fetching data 
+userRoute.get('/single', async(req, res) => {
+        const fectchedData = await database.fetchSingleData();
+        database.closeConnection();
+        res.status(200).send(fectchedData);
+})
+
 // handle post request and save the data to the database
 userRoute.post('/', (req, res) => {
         database.save(req.body, (err) => {
