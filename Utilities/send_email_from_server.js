@@ -9,6 +9,8 @@ const transporter = nodemailer.createTransport({
                 user: "<your email>",
                 pass: "<your password>",
         },
+        // Be carefull about from, if from is missing or the auth.user and from isn't same then email will
+        // landed to the reciever spam folder.
         from:"<your email>",
 });
 
