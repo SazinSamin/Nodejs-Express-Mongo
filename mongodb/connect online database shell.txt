@@ -1,0 +1,5 @@
+use command on cli, different database name & address for yours
+
+  - mongosh "mongodb+srv://cluster0.dduuimh.mongodb.net/myFirstDatabase" --apiVersion 1 --username sazinsamin
+
+then enter password
