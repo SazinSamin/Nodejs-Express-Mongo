@@ -60,3 +60,10 @@ market> db.products.deleteOne({name: 'Alu'})
 # delete multtple collection
 market> db.products.deleteMany({avaiable: false})
 
+# get the latest saved data
+db.test_prosthetics.find().sort({$natural:-1})
+
+# get the latest save data with limit
+ db.test_prosthetics.find().sort({$natural:-1}).limit(2)
+
+
